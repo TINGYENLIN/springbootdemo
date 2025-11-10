@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Integer productId) {
+    public Product getProductById(String productId) {
         return productDao.getProductById(productId);
     }
 
@@ -39,12 +39,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProduct(Integer productId, ProductRequest productRequest) {
+    public void updateProduct(String productId, ProductRequest productRequest) {
         productDao.updateProduct(productId, productRequest);
     }
 
     @Override
-    public void deleteProductById(Integer productId) {
+    public void deleteProductById(String productId) {
         productDao.deleteProductById(productId);
     }
 }
