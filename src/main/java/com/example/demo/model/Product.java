@@ -1,47 +1,44 @@
 package com.example.demo.model;
 
-import java.util.Date;
-
 public class Product {
 
-    private Integer idproduct2;
+    private String productId;
     private String distance;
     private String length;
     private String weight;
     private Integer price;
-    private String description;
-    private Date createdDate;
-    private Date lastModifiedDate;
+    private String note;
+    
 
-    public Integer getidproduct2() {
-        return idproduct2;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setidproduct2(Integer idproduct2) {
-        this.idproduct2 = idproduct2;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
-    public String getdistance() {
+    public String getDistance() {
         return distance;
     }
 
-    public void setdistance(String distance) {
+    public void setDistance(String distance) {
         this.distance = distance;
     }
 
-    public String getlength() {
+    public String getLength() {
         return length;
     }
 
-    public void setlength(String length) {
+    public void setLength(String length) {
         this.length = length;
     }
 
-    public String getweight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setweight(String weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
 
     }
@@ -53,28 +50,11 @@ public class Product {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
+    public String getNote() {
+        return note;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setNote(String note) {
+        this.note = note;
     }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(Date lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
 }

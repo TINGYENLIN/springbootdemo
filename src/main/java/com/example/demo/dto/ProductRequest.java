@@ -4,9 +4,6 @@ import jakarta.validation.constraints.NotNull;
 
 public class ProductRequest {
 
-     @NotNull
-    private String idproduct2;
-
     @NotNull
     private String distance;
 
@@ -19,38 +16,30 @@ public class ProductRequest {
     @NotNull
     private Integer price;
 
-    private String status;
+    private String note;
 
 
-    public String getidproduct2() {
-        return idproduct2;
-    }
-
-    public void setidproduct2(String idproduct2) {
-        this.idproduct2 = idproduct2;
-    }
-
-    public String getdistance() {
+    public String getDistance() {
         return distance;
     }
 
-    public void setdistance(String distance) {
+    public void setDistance(String distance) {
         this.distance = distance;
     }
 
-    public String getlength() {
+    public String getLength() {
         return length;
     }
 
-    public void setlength(String length) {
+    public void setLength(String length) {
         this.length = length;
     }
 
-    public String getweight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setweight(String weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
@@ -62,11 +51,11 @@ public class ProductRequest {
         this.price = price;
     }
 
-    public String getstatus() {
-        return status;
+    public String getNote() {
+        return note;
     }
 
-    public void setstatus(String status) {
-        this.status = status;
+    public void setNote(String note) {
+        this.note = note;
     }
 }
