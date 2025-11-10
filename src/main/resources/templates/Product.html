@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>商品管理系統</title>
+  <style>
+    body { font-family: sans-serif; margin: 30px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #aaa; padding: 8px; text-align: center; }
+    input, button { margin: 5px; padding: 5px 10px; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <h1>📦 商品管理系統</h1>
+
+  <div>
+    <h3>新增商品</h3>
+    <input id="distance" placeholder="距離" />
+    <input id="length" placeholder="長度" />
+    <input id="weight" placeholder="重量" />
+    <input id="price" placeholder="價格" type="number" />
+    <input id="note" placeholder="備註" />
+    <button onclick="createProduct()">新增</button>
+  </div>
+
+  <h3>商品清單</h3>
+  <table id="productTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>距離</th>
+        <th>長度</th>
+        <th>重量</th>
+        <th>價格</th>
+        <th>備註</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const apiBase = "http://localhost:8080/products";
+
+    // 讀取所有商品
+    async function loadProducts() {
+      const res = await fetch(apiBase);
+      const products = await res.json();
+      const tbody = document.querySelector("#productTable tbody");
+      tbody.innerHTML = "";
+
+      products.forEach(p => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${p.productId}</td>
+          <td>${p.distance}</td>
+          <td>${p.length}</td>
+          <td>${p.weight}</td>
+          <td>${p.price}</td>
+          <td>${p.note}</td>
+          <td>
+            <button onclick="deleteProduct('${p.productId}')">刪除</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 新增商品
+    async function createProduct() {
+      const body = {
+        distance: document.getElementById("distance").value,
+        length: document.getElementById("length").value,
+        weight: document.getElementById("weight").value,
+        price: parseInt(document.getElementById("price").value),
+        note: document.getElementById("note").value
+      };
+
+      const res = await fetch(apiBase, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+
+      if (res.ok) {
+        alert("新增成功！");
+        loadProducts();
+      } else {
+        alert("新增失敗！");
+      }
+    }
+
+    // 刪除商品
+    async function deleteProduct(id) {
+      if (!confirm("確定要刪除嗎？")) return;
+      const res = await fetch(`${apiBase}/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        alert("刪除成功！");
+        loadProducts();
+      } else {
+        alert("刪除失敗！");
+      }
+    }
+
+    // 初始化載入
+    loadProducts();
+  </script>
+
+</body>
+</html>
