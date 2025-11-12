@@ -1,7 +1,6 @@
 package com.example.demo.dao.impl;
 
 import com.example.demo.dao.ProductDao;
-import com.example.demo.dto.ProductQueryParams;
 import com.example.demo.dto.ProductRequest;
 import com.example.demo.model.Product;
 import com.example.demo.rowmapper.ProductRowMapper;
@@ -21,45 +20,7 @@ public class ProductDaoImpl implements ProductDao {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    
-    // 1️.查詢商品數量
-    
-    @Override
-    public Integer countProduct(ProductQueryParams productQueryParams) {
-        String sql = "SELECT COUNT(*) FROM product2 WHERE 1=1";
-        Map<String, Object> map = new HashMap<>();
-
-        if (productQueryParams.getSearch() != null) {
-            sql += " AND note LIKE :search";
-            map.put("search", "%" + productQueryParams.getSearch() + "%");
-        }
-
-        return namedParameterJdbcTemplate.queryForObject(sql, map, Integer.class);
-    }
-
-    
-    // 2️.查詢商品列表
-    
-    @Override
-    public List<Product> getProducts(ProductQueryParams productQueryParams) {
-        String sql = "SELECT * FROM product2 WHERE 1=1";
-        Map<String, Object> map = new HashMap<>();
-
-        if (productQueryParams.getSearch() != null) {
-            sql += " AND note LIKE :search";
-            map.put("search", "%" + productQueryParams.getSearch() + "%");
-        }
-
-        // 排序與分頁
-        sql += " ORDER BY " + productQueryParams.getOrderBy() + " " + productQueryParams.getSort();
-        sql += " LIMIT :limit OFFSET :offset";
-        map.put("limit", productQueryParams.getLimit());
-        map.put("offset", productQueryParams.getOffset());
-
-        return namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
-    }
-
-    
+      
     // 3️.查詢單筆資料
     
     @Override
