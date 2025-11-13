@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/employeess")
-public class EmployeeConreoller {
+public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
@@ -22,6 +22,6 @@ public class EmployeeConreoller {
     public ResponseEntity<String> createEmployee(@RequestBody EmployeeRequest employeeRequest) {
         Integer employeeId = employeeService.createEmployee(employeeRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Product created with ID: " + employeeId);
+                .body("Employee created with ID: " + employeeId);
     }
 }
