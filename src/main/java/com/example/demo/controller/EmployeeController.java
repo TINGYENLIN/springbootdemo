@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/employeess")
 public class EmployeeController {
 
     @Autowired
@@ -18,10 +17,9 @@ public class EmployeeController {
 
 
     // 新增員工
-    @PostMapping
+    @PostMapping("/employeess")
     public ResponseEntity<String> createEmployee(@RequestBody EmployeeRequest employeeRequest) {
         Integer employeeId = employeeService.createEmployee(employeeRequest);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Employee created with ID: " + employeeId);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Employee created with ID: " + employeeId);
     }
 }

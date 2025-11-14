@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/members")
 public class MemberController {
 
     @Autowired
@@ -18,10 +17,9 @@ public class MemberController {
 
 
     // 新增員工
-    @PostMapping
-    public ResponseEntity<String> createEmployee(@RequestBody MemberRequest memberRequest) {
+    @PostMapping("/members")
+    public ResponseEntity<String> createMember(@RequestBody MemberRequest memberRequest) {
         Integer memberId = memberService.createMember(memberRequest);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Member created with ID: " + memberId);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Member created with ID: " + memberId);
     }
 }
