@@ -29,6 +29,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         params.addValue("employeebirthday", employeeRequest.getEmployeeBirthday());
         params.addValue("employeephone", employeeRequest.getEmployeePhone());
         params.addValue("remark", employeeRequest.getRemark());
+        params.addValue("status", "active");
 
 
         KeyHolder keyHolder = new GeneratedKeyHolder();

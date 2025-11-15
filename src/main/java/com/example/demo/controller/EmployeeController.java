@@ -22,4 +22,9 @@ public class EmployeeController {
         Integer employeeId = employeeService.createEmployee(employeeRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body("Employee created with ID: " + employeeId);
     }
+
+    @GetMapping("/employeess")
+    public String test() {
+        return "API OK";
+    }   
 }

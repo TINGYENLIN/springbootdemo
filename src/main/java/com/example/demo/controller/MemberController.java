@@ -22,4 +22,10 @@ public class MemberController {
         Integer memberId = memberService.createMember(memberRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body("Member created with ID: " + memberId);
     }
+
+    @GetMapping("/members")
+    public String test() {
+        return "API OK";
+    }   
+
 }
