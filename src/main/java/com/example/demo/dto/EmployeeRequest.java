@@ -1,68 +1,62 @@
 package com.example.demo.dto;
 
 import jakarta.validation.constraints.NotNull;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EmployeeRequest {
 
     @NotNull
-    @JsonProperty("employeename")
-    private String employeename;
+    private String employeeName;
 
     @NotNull
-    @JsonProperty("employeegender")
-    private String employeegender;
+    private String employeeGender;
 
     @NotNull
-    @JsonProperty("employeebirthday")
-    private String employeebirthday;
+    private String employeeBirthday;
 
     @NotNull
-    @JsonProperty("employeephone")
-    private String employeephone;
+    private String employeePhone;
 
-    @JsonProperty("remark")
-    private String remark;
+    private String Remark;
 
 
     public String getEmployeeName() {
-        return employeename;
+        return employeeName;
     }
 
-    public void setEmployeeName(String employeename) {
-        this.employeename = employeename;
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 
     public String getEmployeeGender() {
-        return employeegender;
+        return employeeGender;
     }
 
-    public void setEmployeeGender(String employeegender) {
-        this.employeegender = employeegender;
+    public void setEmployeeGender(String employeeGender) {
+        this.employeeGender = employeeGender;
     }
 
     public String getEmployeeBirthday() {
-        return employeebirthday;
+        return employeeBirthday;
     }
 
-    public void setEmployeeBirthday(String employeebirthday) {
-        this.employeebirthday = employeebirthday;
+    public void setEmployeeBirthday(String employeeBirthday) {
+        this.employeeBirthday = employeeBirthday;
     }
 
     public String getEmployeePhone() {
-        return employeephone;
+        return employeePhone;
     }
 
-    public void setEmployeePhone(String employeephone) {
-        this.employeephone = employeephone;
+    public void setEmployeePhone(String employeePhone) {
+        this.employeePhone = employeePhone;
     }
 
     public String getRemark() {
-        return remark;
+        return Remark;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setRemark(String Remark) {
+        this.Remark = Remark;
     }
 }
 

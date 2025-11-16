@@ -196,8 +196,13 @@
     const button = document.getElementById("submitBtn");
     if (button) {
       button.addEventListener("click", insertpost);
-    }
-  };
+      }
+    };
+
+    window.onload = function() {
+    bindCustomerFormEvents();
+    };
+
   </script>
 </body>
 </html>
