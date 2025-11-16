@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin(origins = "*") // 允許所有來源
 public class MemberController {
 
     @Autowired

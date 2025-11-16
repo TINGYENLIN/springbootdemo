@@ -5,80 +5,80 @@ import jakarta.validation.constraints.NotNull;
 public class MemberRequest {
 
     @NotNull
-    private String membername;
+    private String memberName;
 
     @NotNull
-    private String membergender;
+    private String memberGender;
 
     @NotNull
-    private String memberbirthday;
+    private String memberBirthday;
 
     @NotNull
-    private String memberemail;
+    private String memberEmail;
 
     @NotNull
-    private String memberphone;
+    private String memberPhone;
 
     @NotNull
-    private String membercountry;
+    private String memberCountry;
 
     @NotNull
-    private String membercreditcard;
+    private String memberCreditcard;
 
 
     public String getMemberName() {
-        return membername;
+        return memberName;
     }
 
-    public void setEmployeeName(String membername) {
-        this.membername = membername;
+    public void setEmployeeName(String memberName) {
+        this.memberName = memberName;
     }
 
     public String getMemberGender() {
-        return membergender;
+        return memberGender;
     }
 
-    public void setMemberGender(String membergender) {
-        this.membergender = membergender;
+    public void setMemberGender(String memberGender) {
+        this.memberGender = memberGender;
     }
 
     public String getMemberBirthday() {
-        return memberbirthday;
+        return memberBirthday;
     }
 
-    public void setMemberBirthday(String memberbirthday) {
-        this.memberbirthday = memberbirthday;
+    public void setMemberBirthday(String memberBirthday) {
+        this.memberBirthday = memberBirthday;
     }
 
     public String getMemberEmail() {
-        return memberemail;
+        return memberEmail;
     }
 
-    public void setMemberEmail(String memberemail) {
-        this.memberemail = memberemail;
+    public void setMemberEmail(String memberEmail) {
+        this.memberEmail = memberEmail;
     }
 
     public String getMemberPhone() {
-        return memberphone;
+        return memberPhone;
     }
 
-    public void setMemberPhone(String memberphone) {
-        this.memberphone = memberphone;
+    public void setMemberPhone(String memberPhone) {
+        this.memberPhone = memberPhone;
     }
 
     public String getMemberCountry() {
-        return membercountry;
+        return memberCountry;
     }
 
-    public void setMemberCountry(String membercountry) {
-        this.membercountry = membercountry;
+    public void setMemberCountry(String memberCountry) {
+        this.memberCountry = memberCountry;
     }
 
     public String getMemberCreditcard() {
-        return membercreditcard;
+        return memberCreditcard;
     }
 
-    public void setMemberCreditcard(String membercreditcard) {
-        this.membercreditcard = membercreditcard;
+    public void setMemberCreditcard(String memberCreditcard) {
+        this.memberCreditcard = memberCreditcard;
     }
 }
