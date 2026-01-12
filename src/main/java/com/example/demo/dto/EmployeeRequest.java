@@ -16,7 +16,7 @@ public class EmployeeRequest {
     @NotNull
     private String employeePhone;
 
-    private String Remark;
+    private String remark;
 
 
     public String getEmployeeName() {
@@ -52,11 +52,11 @@ public class EmployeeRequest {
     }
 
     public String getRemark() {
-        return Remark;
+        return remark;
     }
 
     public void setRemark(String Remark) {
-        this.Remark = Remark;
+        this.remark = Remark;
     }
 }
 
