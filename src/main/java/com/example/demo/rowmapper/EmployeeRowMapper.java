@@ -1,11 +1,12 @@
 package com.example.demo.rowmapper;
 
-import com.example.demo.model.Employee;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.NonNull;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.example.demo.model.Employee;
 
 
 public class EmployeeRowMapper implements RowMapper<Employee> {
