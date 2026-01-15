@@ -22,8 +22,8 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Integer createOrder(OrderRequest orderRequest) {
-        String sql = "INSERT INTO employee (idorders, memberID, customerName, customerPhone, productID, plan, price, employeeID, employeeName, Credit Card Number, Date Time, status) "
-                   + "VALUES (:idorders, :memberID, :customerName, :customerPhone, :productID, :plan, :price, :employeeID, :employeeName, :Credit Card Number, :Date Time, :status)";
+        String sql = "INSERT INTO employee (idorders, memberID, customerName, customerPhone, productID, plan, price, employeeID, employeeName, Credit_Card_Number, Date_Time, status) "
+                   + "VALUES (:idorders, :memberID, :customerName, :customerPhone, :productID, :plan, :price, :employeeID, :employeeName, :Credit_Card_Number, :Date_Time, :status)";
     
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("idorders", orderRequest.getOrderId());
@@ -35,8 +35,8 @@ public class OrderDaoImpl implements OrderDao {
         params.addValue("price", orderRequest.getPrice());
         params.addValue("employeeID", orderRequest.getEmployeeId());
         params.addValue("employeeName", orderRequest.getEmployeeName());
-        params.addValue("Credit Card Number", orderRequest.getMemberCreditcard());
-        params.addValue("Date Time", orderRequest.getOrderDate());
+        params.addValue("Credit_Card_Number", orderRequest.getMemberCreditcard());
+        params.addValue("Date_Time", orderRequest.getOrderDate());
         params.addValue("status", "active");
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -50,7 +50,7 @@ public class OrderDaoImpl implements OrderDao {
 
      @Override
     public List<Order> getAllOrder() {
-        String sql = "SELECT idorders, memberID, customerName, customerPhone, productID, plan, price, employeeID, employeeName, Credit Card Number, Date Time, status FROM orders";
+        String sql = "SELECT idorders, memberID, customerName, customerPhone, productID, plan, price, employeeID, employeeName, Credit_Card_Number, Date_Time, status FROM orders";
 
         return namedParameterJdbcTemplate.query(sql, new OrderRowMapper());
     }

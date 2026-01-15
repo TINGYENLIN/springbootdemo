@@ -1,11 +1,12 @@
 package com.example.demo.rowmapper;
 
-import com.example.demo.model.Order;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.NonNull;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.example.demo.model.Order;
 
 public class OrderRowMapper implements RowMapper<Order> {
 
@@ -23,8 +24,8 @@ public class OrderRowMapper implements RowMapper<Order> {
         order.setPrice(resultSet.getInt("price"));
         order.setEmployeeId(resultSet.getInt("employeeID"));
         order.setEmployeeName(resultSet.getString("employeeName"));
-        order.setMemberCreditcard(resultSet.getString("Credit Card Number"));
-        order.setOrderDate(resultSet.getDate("orderDate"));
+        order.setMemberCreditcard(resultSet.getString("Credit_Card_Number"));
+        order.setOrderDate(resultSet.getDate("Date_Time"));
         order.setStatus(resultSet.getString("status"));
 
         return order;
