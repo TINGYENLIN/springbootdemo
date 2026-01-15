@@ -1,7 +1,6 @@
 package com.example.demo.dao.impl;
 
-import com.example.demo.dao.OrderDao;
-import com.example.demo.dto.OrderRequest;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -9,6 +8,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
+import com.example.demo.dao.OrderDao;
+import com.example.demo.dto.OrderRequest;
+import com.example.demo.model.Order;
+import com.example.demo.rowmapper.OrderRowMapper;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
@@ -43,4 +47,11 @@ public class OrderDaoImpl implements OrderDao {
         }
         return key.intValue();
         }
+
+     @Override
+    public List<Order> getAllOrder() {
+        String sql = "SELECT idorders, memberID, customerName, customerPhone, productID, plan, price, employeeID, employeeName, Credit Card Number, Date Time, status FROM orders";
+
+        return namedParameterJdbcTemplate.query(sql, new OrderRowMapper());
+    }
 }
