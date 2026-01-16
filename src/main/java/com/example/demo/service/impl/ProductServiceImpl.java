@@ -5,6 +5,8 @@ import com.example.demo.dto.ProductRequest;
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +19,11 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
+    public List<Product> getAllProduct() {
+        return productDao.getAllProduct();
+    }
+
+     @Override
     public Product getProductById(String productId) {
         return productDao.getProductById(productId);
     }

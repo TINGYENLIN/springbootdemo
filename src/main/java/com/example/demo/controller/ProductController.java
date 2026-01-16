@@ -1,16 +1,27 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ProductRequest;
-import com.example.demo.model.Product;
-import com.example.demo.service.ProductService;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dto.ProductRequest;
+import com.example.demo.model.Product;
+import com.example.demo.service.ProductService;
 
 
 @RestController
+@CrossOrigin(origins = "http://127.0.0.1:5500")
 @RequestMapping("/products")  // 路徑開頭統一，例如 /products
 public class ProductController {
 
@@ -19,19 +30,15 @@ public class ProductController {
 
     
     // 1.查詢單筆商品
-    // GET /products/{productId}
-    @GetMapping("/{productId}")
-    public ResponseEntity<Product> getProductById(@PathVariable String productId) {
-        Product product = productService.getProductById(productId);
-        if (product != null) {
-            return ResponseEntity.ok(product);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    // 取得所有商品列表 (返回 JSON 格式)
+    @GetMapping
+    public ResponseEntity<List<Product>> getAllProduct() {
+    System.out.println(">>> getAllProduct 被呼叫了");
+    List<Product> products = productService.getAllProduct();
+    return ResponseEntity.ok(products);
     }
 
     // 2.新增商品
-    // POST /products
     @PostMapping
     public ResponseEntity<String> createProduct(@RequestBody ProductRequest productRequest) {
         Integer productId = productService.createProduct(productRequest);

@@ -1,18 +1,18 @@
 package com.example.demo.dao.impl;
 
-import com.example.demo.dao.ProductDao;
-import com.example.demo.dto.ProductRequest;
-import com.example.demo.model.Product;
-import com.example.demo.rowmapper.ProductRowMapper;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.example.demo.dao.ProductDao;
+import com.example.demo.dto.ProductRequest;
+import com.example.demo.model.Product;
+import com.example.demo.rowmapper.ProductRowMapper;
 
 @Repository
 public class ProductDaoImpl implements ProductDao {
@@ -21,11 +21,18 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
       
-    // 3️.查詢單筆資料
-    
+    // 1.查詢全部資料
+
+    @Override
+    public List<Product> getAllProduct() {
+        String sql = "SELECT idproduct, distance, length, weight, price, note FROM product2";
+        Map<String, Object> map = new HashMap<>();
+        return namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
+    }
+
     @Override
     public Product getProductById(String productId) {
-        String sql = "SELECT * FROM product2 WHERE idproduct2 = :productId";
+        String sql = "SELECT idproduct, distance, length, weight, price, note FROM product2 WHERE idproduct = :productId";
         Map<String, Object> map = new HashMap<>();
         map.put("productId", productId);
 
@@ -34,7 +41,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     
-    // 4️.新增資料
+    // 2.新增資料
     
     @Override
     public Integer createProduct(ProductRequest productRequest) {
@@ -57,7 +64,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     
-    // 5️.更新資料
+    // 3.更新資料
     
     @Override
     public void updateProduct(String productId, ProductRequest productRequest) {
@@ -67,7 +74,7 @@ public class ProductDaoImpl implements ProductDao {
                    + "weight = :weight, "
                    + "price = :price, "
                    + "note = :note "
-                   + "WHERE idproduct2 = :productId";
+                   + "WHERE idproduct = :productId";
 
         MapSqlParameterSource params = new MapSqlParameterSource();
         params.addValue("distance", productRequest.getDistance());
@@ -81,11 +88,11 @@ public class ProductDaoImpl implements ProductDao {
     }
 
 
-    // 7️.刪除資料
+    // 4.刪除資料
 
     @Override
     public void deleteProductById(String productId) {
-        String sql = "DELETE FROM product2 WHERE idproduct2 = :productId";
+        String sql = "DELETE FROM product2 WHERE idproduct = :productId";
         Map<String, Object> map = new HashMap<>();
         map.put("productId", productId);
 
