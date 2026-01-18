@@ -32,13 +32,14 @@
         const data = await resp.json();
 
         cname.innerHTML = '<option value="" disabled selected>-- 請選擇會員 --</option>';
+
         data.forEach(row => {
           const op = document.createElement("option");
-          op.value = row["idmember"];
-          op.textContent = `${row["idmember"]} - ${row["membername"]}`;
-          op.setAttribute("data-name", row["membername"]);
-          op.setAttribute("data-phone", row["phone"]);
-          op.setAttribute("data-ccnum", row["creditcard"]);
+          op.value = row["memberId"];
+          op.textContent = `${row["memberId"]} - ${row["memberName"]} (電話:${row["memberPhone"]}, 信用卡:${row["memberCreditcard"]})`;
+          op.setAttribute("data-name", row["memberName"]);
+          op.setAttribute("data-phone", row["memberPhone"]);
+          op.setAttribute("data-ccnum", row["memberCreditcard"]);
           cname.append(op);
         });
       } catch (err) {
@@ -61,8 +62,8 @@
           const weightCategory = parseFloat(row["weight"]) >= 10 ? "over 10" : "under 10";
           const plan = `${row["distance"]} | ${row["length"]} | ${weightCategory}`;
 
-          op.value = row["idproduct2"];
-          op.textContent = `${row["idproduct2"]} - 距離:${row["distance"]}, 長度:${row["length"]}, 重量:${row["weight"]}, 價格:${row["price"]}`;
+          op.value = row["productId"];
+          op.textContent = `${row["productId"]} - 距離:${row["distance"]}, 長度:${row["length"]}, 重量:${row["weight"]}, 價格:${row["price"]}`;
           op.setAttribute("data-price", row["price"]);
           op.setAttribute("data-plan", plan);
           pname.append(op);
@@ -75,7 +76,7 @@
 
     window.snameAdd = async function () {
       const sname = document.getElementById("sname");
-      const apiShipper = 'http://localhost:8080/employeess';
+      const apiShipper = 'http://localhost:8080/employees';
 
       try {
         const resp = await fetch(apiShipper);
@@ -84,8 +85,8 @@
         sname.innerHTML = '<option value="" disabled selected>-- 請選擇運送者 --</option>';
         data.forEach(row => {
           const op = document.createElement("option");
-          op.value = row["idemployee"];
-          op.textContent = `${row["idemployee"]} - ${row["employeeName"]}`;
+          op.value = row["employeeId"];
+          op.textContent = `${row["employeeId"]} - ${row["employeeName"]} (電話:${row["employeePhone"]})`;
           op.setAttribute("data-name", row["employeeName"]);
           sname.append(op);
         });
@@ -114,21 +115,20 @@
       const selectedShipper = sname.options[sname.selectedIndex];
 
       const payload = {
-        table: "orders",
-        pname: pnameValue,
-        cname: cnameValue,
-        sname: snameValue,
+        memberId: cnameValue,                       // <- 這裡原本沒送
+        memberName: selectedCustomer.getAttribute("data-name"),
+        memberPhone: selectedCustomer.getAttribute("data-phone"),
+        memberCreditcard: selectedCustomer.getAttribute("data-ccnum"),
+        productId: pnameValue,
+        plan: selectedProduct.getAttribute("data-plan"),
         price: selectedProduct.getAttribute("data-price"),
-        customerName: selectedCustomer.getAttribute("data-name"),
-        customerPhone: selectedCustomer.getAttribute("data-phone"),
-        employeeName: selectedShipper.getAttribute("data-name"),
-        creditCardNumber: selectedCustomer.getAttribute("data-ccnum"),
-        plan: selectedProduct.getAttribute("data-plan")
-      };
+        employeeId: snameValue,
+        employeeName: selectedShipper.getAttribute("data-name")
+        };
 
-      console.log("送出的資料：", payload);
+        console.log("送出的資料：", payload);
 
-      fetch("http://localhost:8000/api/2/insert", {
+      fetch("http://localhost:8080/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -22,7 +22,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Integer createOrder(OrderRequest orderRequest) {
-        String sql = "INSERT INTO employee (idorders, memberID, customerName, customerPhone, productID, plan, price, employeeID, employeeName, Credit_Card_Number, Date_Time, status) "
+        String sql = "INSERT INTO orders (idorders, memberID, customerName, customerPhone, productID, plan, price, employeeID, employeeName, Credit_Card_Number, Date_Time, status) "
                    + "VALUES (:idorders, :memberID, :customerName, :customerPhone, :productID, :plan, :price, :employeeID, :employeeName, :Credit_Card_Number, :Date_Time, :status)";
     
         MapSqlParameterSource params = new MapSqlParameterSource();

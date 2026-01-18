@@ -55,8 +55,8 @@ public class EmployeeRequest {
         return remark;
     }
 
-    public void setRemark(String Remark) {
-        this.remark = Remark;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
 

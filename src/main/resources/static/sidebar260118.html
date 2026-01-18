@@ -74,9 +74,9 @@
   <div class="sidebar" id="sidebar">
     <h2>功能選單</h2>
     <a href="Sidebar.html?target=demoinsertCustomer5.html">🧑‍💼 新增客戶</a>
-    <a href="Sidebar.html?target=insertEmployee0626.html">🚚 新增送貨員</a>
-    <a href="Sidebar.html?target=demoinsertOrder3.html">📝 新增訂單</a>
-    <a href="Sidebar.html?target=demoAPI0622.html">🔍 查詢資料</a>
+    <a href="Sidebar.html?target=insertEmployee260118.html">🚚 新增送貨員</a>
+    <a href="Sidebar.html?target=demoinsertOrder260118.html">📝 新增訂單</a>
+    <a href="Sidebar.html?target=demoAPI06222.html">🔍 查詢資料</a>
   </div>
 
   <div class="content" id="mainContent">
@@ -155,9 +155,9 @@
         // 呼叫子頁面提供的初始化方法
         if (fileName.includes("demoinsertCustomer5") && typeof window.bindCustomerFormEvents === "function") {
           window.bindCustomerFormEvents();
-        } else if (fileName.includes("insertEmployee0626") && typeof window.bindEmployeeFormEvents === "function") {
+        } else if (fileName.includes("insertEmployee260118") && typeof window.bindEmployeeFormEvents === "function") {
           window.bindEmployeeFormEvents();
-        } else if (fileName.includes("demoinsertOrder3") && typeof window.bindOrderFormEvents === "function") {
+        } else if (fileName.includes("demoinsertOrder260118") && typeof window.bindOrderFormEvents === "function") {
           window.bindOrderFormEvents();
         }
 
@@ -186,7 +186,7 @@
         if (target) {
           loadPage(target);
           if (window.innerWidth <= 768) toggleSidebar();
-          history.pushState(null, '', `sidebar0626.html?target=${target}`);
+          history.pushState(null, '', `sidebar260118.html?target=${target}`);
         }
       });
     });

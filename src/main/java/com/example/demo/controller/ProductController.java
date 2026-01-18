@@ -22,7 +22,7 @@ import com.example.demo.service.ProductService;
 
 @RestController
 @CrossOrigin(origins = "http://127.0.0.1:5500")
-@RequestMapping("/products")  // 路徑開頭統一，例如 /products
+@RequestMapping("/products")
 public class ProductController {
 
     @Autowired
@@ -33,9 +33,8 @@ public class ProductController {
     // 取得所有商品列表 (返回 JSON 格式)
     @GetMapping
     public ResponseEntity<List<Product>> getAllProduct() {
-    System.out.println(">>> getAllProduct 被呼叫了");
-    List<Product> products = productService.getAllProduct();
-    return ResponseEntity.ok(products);
+        List<Product> products = productService.getAllProduct();
+        return ResponseEntity.ok(products);
     }
 
     // 2.新增商品
