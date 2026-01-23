@@ -48,10 +48,42 @@ public class OrderDaoImpl implements OrderDao {
         return key.intValue();
         }
 
-     @Override
+    @Override
     public List<Order> getAllOrder() {
         String sql = "SELECT idorders, memberID, customerName, customerPhone, productID, plan, price, employeeID, employeeName, Credit_Card_Number, Date_Time, status FROM orders";
 
         return namedParameterJdbcTemplate.query(sql, new OrderRowMapper());
+    }
+
+    @Override
+    public void updateOrder(Integer orderId, OrderRequest orderRequest) {
+
+        String sql = "UPDATE orders SET "
+                    + "memberID = :memberID, "
+                    + "customerName = :customerName, "
+                    + "customerPhone = :customerPhone, "
+                    + "productID = :productID, "
+                    + "plan = :plan, "
+                    + "price = :price, "
+                    + "employeeID = :employeeID, "
+                    + "employeeName = :employeeName, "
+                    + "Credit_Card_Number = :Credit_Card_Number, "
+                    + "status = :status "
+                    + "WHERE idorders = :idorders";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("idorders", orderId);
+        params.addValue("memberID", orderRequest.getMemberId());
+        params.addValue("customerName", orderRequest.getMemberName());
+        params.addValue("customerPhone", orderRequest.getMemberPhone());
+        params.addValue("productID", orderRequest.getProductId());
+        params.addValue("plan", orderRequest.getPlan());
+        params.addValue("price", orderRequest.getPrice());
+        params.addValue("employeeID", orderRequest.getEmployeeId());
+        params.addValue("employeeName", orderRequest.getEmployeeName());
+        params.addValue("Credit_Card_Number", orderRequest.getMemberCreditcard());
+        params.addValue("status", orderRequest.getStatus());
+
+        namedParameterJdbcTemplate.update(sql, params);
     }
 }

@@ -9,4 +9,5 @@ public interface OrderDao {
 
     Integer createOrder(OrderRequest orderRequest);
     List<Order> getAllOrder();
+    void updateOrder(Integer orderId, OrderRequest orderRequest);
 }

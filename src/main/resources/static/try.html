@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>資料操作</title>
+  <style>
+    .hidden { display: none; } 
+    .tab-btn {
+      margin-right: 10px;
+      padding: 6px 12px;
+      cursor: pointer;
+      background-color: #0078D4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }  
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 1em;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th { background-color: #f0f0f0; }
+    #tableContainer { margin-bottom: 2em; }
+    .delete-btn {
+      padding: 4px 8px;
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .delete-btn:hover { background-color: #b71c1c; }
+    .edit-btn, .cancel-btn {
+      padding: 4px 8px;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      margin-left: 4px;
+    }
+    .edit-btn { background-color: #1976d2; }
+    .edit-btn:hover { background-color: #0d47a1; }
+    .cancel-btn { background-color: #757575; }
+    .cancel-btn:hover { background-color: #424242; }
+    input { width: 100%; box-sizing: border-box; }
+  </style>
+</head>
+
+<body>
+  <div class="demoAPI06222">
+    <h1>資料表操作</h1>
+    <div>
+      <button class="tab-btn" onclick="loadTable(apiemployee, container1, 'employees')">送貨員列表</button>
+      <button class="tab-btn" onclick="loadTable(apimember, container1, 'members')">會員清單</button>
+      <button class="tab-btn" onclick="loadTable(apiorders, container1, 'orders')">歷史訂單查詢</button>
+      <button class="tab-btn" onclick="loadTable(apiproduct2, container1, 'products')">產品列表</button>
+      <button class="tab-btn" onclick="loadTable(apilength, container1, 'length')">長度</button>
+      <button class="tab-btn" onclick="loadTable(apiweight, container1, 'weight')">寬度</button>
+      
+      <div id="tableContainer">請點擊上方按鈕載入資料</div>
+    </div>
+  </div>
+
+<script>
+  const apiemployee = 'http://localhost:8080/employees';
+  const apimember = 'http://localhost:8080/members';
+  const apiorders = 'http://localhost:8080/orders';
+  const apiproduct2 = 'http://localhost:8080/products';
+  const apilength = 'http://localhost:8080/length';
+  const apiweight = 'http://localhost:8080/weight';
+  const container1 = document.getElementById('tableContainer');
+
+  let currentData = [];
+  let currentTableName = [];
+
+  window.loadTable = async function(url, todiv, tableName) {
+    try {
+      todiv.textContent = "載入中...";
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error(`HTTP 錯誤: ${resp.status}`);
+      const data = await resp.json();
+      if (!Array.isArray(data) || data.length === 0) {
+        todiv.textContent = '沒有資料';
+        return;
+      }
+
+      currentData = data;
+      currentTableName = tableName;
+
+      let table = '<table><thead><tr><th>操作</th>';
+      const keys = Object.keys(data[0]);
+      keys.forEach(k => { table += `<th>${k}</th>`; });
+      table += '</tr></thead><tbody>';
+
+      data.forEach((row, index) => {
+        table += `<tr data-index="${index}">`;
+        table += `<td><button class="delete-btn" onclick="deleteRow(${index})">刪除</button>`;
+
+        if (tableName === 'orders') {
+          table += `<button class="edit-btn" onclick="startEdit(${index})">修改</button>`;
+        }
+        table += '</td>';
+
+        keys.forEach(k => {
+          table += `<td data-key="${k}">${row[k] ?? ''}</td>`;
+        });
+
+        table += '</tr>';
+      });
+
+      table += '</tbody></table>';
+      todiv.innerHTML = table;
+
+    } catch (err) {
+      todiv.textContent = '載入失敗：' + err.message;
+      console.error(err);
+    }
+  };
+
+  window.deleteRow = function(index) {
+    if (!confirm('確定要刪除這筆資料嗎?')) return;
+    const row = currentData[index];
+    const requestBody = { ...row, table: currentTableName, state: -1 };
+
+    fetch('http://localhost:8080/api/2/update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestBody),
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP 錯誤: ${res.status}`);
+      alert('刪除成功');
+      reloadCurrentTable();
+    })
+    .catch(err => {
+      alert('刪除失敗：' + err.message);
+      console.error(err);
+    });
+  };
+
+  // inline edit 開始
+  window.startEdit = function(index) {
+    const tr = container1.querySelector(`tr[data-index="${index}"]`);
+    if (!tr) return;
+    const row = currentData[index];
+    const cells = tr.querySelectorAll('td[data-key]');
+
+    // 將欄位變成 input
+    cells.forEach(td => {
+      const key = td.getAttribute('data-key');
+      td.innerHTML = `<input type="text" value="${row[key] ?? ''}" />`;
+    });
+
+    const btnCell = tr.querySelector('td:first-child');
+    const editBtn = btnCell.querySelector('.edit-btn');
+
+    // 確認修改按鈕
+    editBtn.textContent = '確認修改';
+    editBtn.onclick = () => confirmEdit(index);
+
+    // 新增取消按鈕
+    let cancelBtn = document.createElement('button');
+    cancelBtn.textContent = '取消';
+    cancelBtn.className = 'cancel-btn';
+    cancelBtn.onclick = () => cancelEdit(index);
+    btnCell.appendChild(cancelBtn);
+  };
+
+  // 取消編輯
+  window.cancelEdit = function(index) {
+    const tr = container1.querySelector(`tr[data-index="${index}"]`);
+    const row = currentData[index];
+    const cells = tr.querySelectorAll('td[data-key]');
+
+    // 恢復原本值
+    cells.forEach(td => {
+      const key = td.getAttribute('data-key');
+      td.textContent = row[key] ?? '';
+    });
+
+    const btnCell = tr.querySelector('td:first-child');
+    const editBtn = btnCell.querySelector('.edit-btn');
+    editBtn.textContent = '修改';
+    editBtn.onclick = () => startEdit(index);
+
+    // 移除取消按鈕
+    const cancelBtn = btnCell.querySelector('.cancel-btn');
+    if (cancelBtn) cancelBtn.remove();
+  };
+
+  // inline edit 確認修改（含驗證）
+  window.confirmEdit = function(index) {
+    const tr = container1.querySelector(`tr[data-index="${index}"]`);
+    const row = currentData[index];
+    const inputs = tr.querySelectorAll('td[data-key] input');
+
+    // 更新 row 資料
+    inputs.forEach(input => {
+      const key = input.parentElement.getAttribute('data-key');
+      row[key] = input.value.trim();
+    });
+
+    // 驗證必填
+    if (!row.memberName || !row.productId) {
+      return alert('會員姓名和產品編號為必填欄位');
+    }
+
+    // 驗證 memberPhone
+    if (row.memberPhone && !/^09\d{8}$/.test(row.memberPhone)) {
+      return alert('會員電話格式錯誤，請輸入 09 開頭 10 碼數字');
+    }
+
+    const orderId = row.idorders || row.orderId;
+    if (!orderId) return alert('找不到訂單編號');
+
+    fetch(`${apiorders}/${orderId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(row)
+    })
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP 錯誤: ${res.status}`);
+      alert('修改成功');
+      reloadCurrentTable();
+    })
+    .catch(err => {
+      alert('修改失敗：' + err.message);
+      console.error(err);
+    });
+  };
+
+  function reloadCurrentTable() {
+    const urlMap = {
+      'employee': apiemployee,
+      'member': apimember,
+      'orders': apiorders,
+      'product': apiproduct2,
+      'length': apilength,
+      'weight': apiweight
+    };
+    loadTable(urlMap[currentTableName], container1, currentTableName);
+  }
+</script>
+</body>
+</html>

@@ -9,4 +9,6 @@ public interface OrderService {
 
     Integer createOrder(OrderRequest orderRequest);
     List<Order> getAllOrder();
+
+    void updateOrder(Integer orderId, OrderRequest orderRequest);
 }

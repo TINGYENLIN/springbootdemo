@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;      // 【新增】
+import org.springframework.web.bind.annotation.PathVariable; // 【新增】
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,5 +37,16 @@ public class OrderController {
     public ResponseEntity<List<Order>> getAllOrder() {
         List<Order> orders = orderService.getAllOrder();
         return ResponseEntity.status(HttpStatus.OK).body(orders);
+    }
+
+    @PutMapping("/orders/{orderId}")
+    public ResponseEntity<String> updateOrder(
+            @PathVariable Integer orderId,
+            @RequestBody OrderRequest orderRequest) {
+
+        orderService.updateOrder(orderId, orderRequest);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Order updated with ID: " + orderId);
     }
 }
