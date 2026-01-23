@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 public class EmployeeRequest {
 
     @NotNull
+    private Integer employeeId;
+
+    @NotNull
     private String employeeName;
 
     @NotNull
@@ -18,6 +21,14 @@ public class EmployeeRequest {
 
     private String remark;
 
+
+    public Integer getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
+    }
 
     public String getEmployeeName() {
         return employeeName;

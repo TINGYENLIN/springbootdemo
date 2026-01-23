@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;      // 【新增】
-import org.springframework.web.bind.annotation.PathVariable; // 【新增】
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;      // 【新增】
+import org.springframework.web.bind.annotation.PutMapping; // 【新增】
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,6 +39,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(orders);
     }
 
+    // 根據 ID 更新訂單
     @PutMapping("/orders/{orderId}")
     public ResponseEntity<String> updateOrder(
             @PathVariable Integer orderId,

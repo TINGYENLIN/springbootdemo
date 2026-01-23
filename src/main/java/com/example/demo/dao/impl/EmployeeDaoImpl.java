@@ -67,4 +67,28 @@ public class EmployeeDaoImpl implements EmployeeDao {
     
         return namedParameterJdbcTemplate.query(sql, new EmployeeRowMapper());
     }
+
+    @Override
+    public void updateEmployee(Integer employeeId, EmployeeRequest employeeRequest) {
+
+        String sql = "UPDATE employee SET "
+                    + "employeename = :employeename, "
+                    + "employeegender = :employeegender, "
+                    + "employeebirthday = :employeebirthday, "
+                    + "employeephone = :employeephone, "
+                    + "remark = :remark, "
+                    + "status = :status "
+                    + "WHERE idemployee = :employeeId";
+
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("employeename", employeeRequest.getEmployeeName());
+        params.addValue("employeegender", employeeRequest.getEmployeeGender());
+        params.addValue("employeebirthday", employeeRequest.getEmployeeBirthday());
+        params.addValue("employeephone", employeeRequest.getEmployeePhone());
+        params.addValue("remark", employeeRequest.getRemark());
+        params.addValue("status", "active");
+        params.addValue("employeeId", employeeId);
+
+        namedParameterJdbcTemplate.update(sql, params);
+    }
 }

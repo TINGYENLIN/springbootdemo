@@ -8,6 +8,10 @@ import com.example.demo.model.Employee;
 public interface EmployeeService {
 
     Integer createEmployee(EmployeeRequest employeeRequest);
+    
     Employee getEmployeeById(Integer employeeId);
+    
     List<Employee> getAllEmployees();
+
+    void updateEmployee(Integer employeeId, EmployeeRequest employeeRequest);
 }
