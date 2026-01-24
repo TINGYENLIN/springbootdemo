@@ -8,6 +8,10 @@ import com.example.demo.model.Member;
 public interface MemberService {
 
     Integer createMember(MemberRequest memberRequest);
+    
     Member getMemberById(Integer memberId);
+    
     List<Member> getAllMember();
+
+    void updateMember(Integer memberId, MemberRequest memberRequest);
 }

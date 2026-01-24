@@ -5,6 +5,9 @@ import jakarta.validation.constraints.NotNull;
 public class MemberRequest {
 
     @NotNull
+    private Integer memberId;
+
+    @NotNull
     private String memberName;
 
     @NotNull
@@ -26,11 +29,19 @@ public class MemberRequest {
     private String memberCreditcard;
 
 
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
+    }
+    
     public String getMemberName() {
         return memberName;
     }
 
-    public void setEmployeeName(String memberName) {
+    public void setMemberName(String memberName) {
         this.memberName = memberName;
     }
 

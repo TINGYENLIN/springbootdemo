@@ -69,4 +69,20 @@ public class MemberDaoImpl implements MemberDao {
 
         return namedParameterJdbcTemplate.query(sql, new MemberRowMapper());
     }
+
+    @Override
+    public void updateMember(Integer memberId, MemberRequest memberRequest) {
+        String sql = "UPDATE member SET membername = :membername, gender = :gender, birthday = :birthday, email = :email, phone = :phone, country = :country, creditcard = :creditcard WHERE idmember = :memberId";
+        MapSqlParameterSource params = new MapSqlParameterSource();
+        params.addValue("membername", memberRequest.getMemberName());
+        params.addValue("gender", memberRequest.getMemberGender());
+        params.addValue("birthday", memberRequest.getMemberBirthday());
+        params.addValue("email", memberRequest.getMemberEmail());
+        params.addValue("phone", memberRequest.getMemberPhone());
+        params.addValue("country", memberRequest.getMemberCountry());
+        params.addValue("creditcard", memberRequest.getMemberCreditcard());
+        params.addValue("memberId", memberId);
+
+        namedParameterJdbcTemplate.update(sql, params);
+    }
 }

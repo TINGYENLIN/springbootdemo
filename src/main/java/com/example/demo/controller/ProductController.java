@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ProductRequest;
@@ -21,8 +20,7 @@ import com.example.demo.service.ProductService;
 
 
 @RestController
-@CrossOrigin(origins = "http://127.0.0.1:5500")
-@RequestMapping("/products")
+@CrossOrigin(origins = "*")
 public class ProductController {
 
     @Autowired
@@ -31,14 +29,14 @@ public class ProductController {
     
     // 1.查詢單筆商品
     // 取得所有商品列表 (返回 JSON 格式)
-    @GetMapping
+    @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProduct() {
         List<Product> products = productService.getAllProduct();
         return ResponseEntity.ok(products);
     }
 
     // 2.新增商品
-    @PostMapping
+    @PostMapping("/products")
     public ResponseEntity<String> createProduct(@RequestBody ProductRequest productRequest) {
         Integer productId = productService.createProduct(productRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -47,7 +45,7 @@ public class ProductController {
 
     // 3.更新商品
     // PUT /products/{productId}
-    @PutMapping("/{productId}")
+    @PutMapping("/products/{productId}")
     public ResponseEntity<String> updateProduct(
             @PathVariable String productId,
             @RequestBody ProductRequest productRequest) {
@@ -63,7 +61,7 @@ public class ProductController {
 
     // 4.刪除商品
     // DELETE /products/{productId}
-    @DeleteMapping("/{productId}")
+    @DeleteMapping("/products/{productId}")
     public ResponseEntity<String> deleteProduct(@PathVariable String productId) {
         Product existing = productService.getProductById(productId);
         if (existing == null) {

@@ -32,4 +32,9 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> getAllMember() {
         return memberDao.getAllMember();
     }
+
+    @Override
+    public void updateMember(Integer memberId, MemberRequest memberRequest) {
+        memberDao.updateMember(memberId, memberRequest);
+    }
 }

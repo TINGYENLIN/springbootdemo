@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -48,5 +49,17 @@ public class MemberController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+    }
+
+    // 根據 ID 更新會員資訊
+    @PutMapping("/members/{memberId}")
+    public ResponseEntity<String> updateMember(
+            @PathVariable Integer memberId,
+            @RequestBody MemberRequest memberRequest) {
+
+        memberService.updateMember(memberId, memberRequest);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("Member updated with ID: " + memberId);
     }
 }
